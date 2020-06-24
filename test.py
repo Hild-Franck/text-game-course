@@ -9,7 +9,11 @@ from rooms import room_layout
 
 player = Character()
 actions = ["Examiner", "Observer", "Ouvrir",
+<<<<<<< HEAD
            "Boire", "Lacher", "Aller", "Bruler", "Crier"]
+=======
+           "Boire", "Lacher", "Aller", "Bruler", "Accroupir"]
+>>>>>>> feature/add-crouch
 inventory = Inventory([])
 game_manager = GameManager(room_layout)
 
@@ -72,8 +76,13 @@ def handle_action(action, obj_choice):
         inventory.content.remove(obj)
     elif action == "ALLER":
         return go(obj_choice)
+<<<<<<< HEAD
     elif action == "CRIER":
         return print("Vous criez.")
+=======
+    elif action == "DANSER":
+        return print("Vous vous accroupissez.")
+>>>>>>> feature/add-crouch
     elif action == "BRULER":
         for item in inventory.content:
             if isinstance(item, Lighter):
