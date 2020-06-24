@@ -9,7 +9,7 @@ from rooms import room_layout
 
 player = Character()
 actions = ["Examiner", "Observer", "Ouvrir",
-           "Boire", "Lacher", "Aller", "Bruler"]
+           "Boire", "Lacher", "Aller", "Bruler", "Danser"]
 inventory = Inventory([])
 game_manager = GameManager(room_layout)
 
@@ -72,6 +72,8 @@ def handle_action(action, obj_choice):
         inventory.content.remove(obj)
     elif action == "ALLER":
         return go(obj_choice)
+    elif action == "DANSER":
+        return print("Vous dansez.")
     elif action == "BRULER":
         for item in inventory.content:
             if isinstance(item, Lighter):
