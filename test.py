@@ -22,7 +22,6 @@ def get_obj(obj_dict, verb="examiner", obj=""):
         return print("Il n'y a rien de tel ici.")
     return obj_dict[obj]
 
-
 def go(direction=""):
     direction = direction.replace(" ", "") or input(
         "Ou voulez vous aller ?\n> ").upper().replace(" ", "")
