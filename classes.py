@@ -179,3 +179,13 @@ class Character():
     def heal(self, hit_point):
         print("Vous regagnez %d HP !" % hit_point)
         self.hit_point += hit_point
+    
+    def end(self, weapon):
+        if weapon:
+            print(f'Vous utilisez {weapon.full_name} pour fuir votre condition de testeur.')
+        else:
+            print('Vous ne trouvez aucun moyen de fuir de ce jeu, dommage.')
+        self.hit_point -= self.hit_point
+
+    def handle_death(self):
+        return True if self.hit_point > 0 else False
