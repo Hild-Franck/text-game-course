@@ -9,7 +9,7 @@ from rooms import room_layout
 
 player = Character()
 actions = ["Examiner", "Observer", "Ouvrir",
-           "Boire", "Lacher", "Aller", "Bruler"]
+           "Boire", "Lacher", "Aller", "Bruler", "Fuir"]
 inventory = Inventory([])
 game_manager = GameManager(room_layout)
 
@@ -77,6 +77,9 @@ def handle_action(action, obj_choice):
                 obj = get_obj(objs, "bruler", obj_choice)
                 return obj.burn()
         return print("Tu ne possede rien pour bruler quoique se soit.")
+    elif action == 'FUIR':
+        obj = get_obj(objs, "lacher", obj_choice)
+        return player.end(obj)
 
 
 game_manager.current_room = room_layout[0][0]
@@ -85,7 +88,7 @@ print(("Vous revenez a vous peu a peu. Tout est flou dans votre esprit. " +
        "A votre droite, vous remarquez %s sur le sol" % inventory.full_name + ". " +
        "Vous le mettez sur le dos, et attendez que vos yeux s'habituent a la luminosite."))
 
-while True:
+while player.handle_death():
     game_manager.print_full_desc()
     user_choice = input("\n\nQue voulez vous faire ?\n( %s )\n> " %
                         " | ".join(actions)).upper()

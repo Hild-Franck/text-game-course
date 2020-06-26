@@ -19,6 +19,8 @@ class Room():
     def __init__(self, content, desc):
         self.content = content
         self.desc = desc
+        self.discovered = False
+        self.icon = ''
         self.doors = self.doors.copy()
         for item in self.content.copy():
             item.init_from_room(self)

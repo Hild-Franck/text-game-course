@@ -34,3 +34,4 @@ class Lighter(Item):
 
   def __init__(self):
     super().__init__("briquet", "un briquet", self.examine_desc)
+
