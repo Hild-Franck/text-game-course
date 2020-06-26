@@ -91,7 +91,7 @@ while True:
                         " | ".join(actions)).upper()
     action, obj = parse_action(user_choice)
     if action == "QUITTER":
-        print("Vous avez abandonné le jeu. bouhhhhhh. SHAAAAAAAAAAME")
+        print("Vous avez abandonné le jeu. SHAME. SHAAAAAAAAAAME")
         break
     if action not in [a.upper() for a in actions]:
         print("Cette action n'éxiste pas\n")
