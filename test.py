@@ -1,4 +1,5 @@
-# Cours de programmation
+#!/usr/bin/python3.8
+# # Cours de programmation
 
 # Creation d'une aventure textuelle
 
@@ -6,20 +7,28 @@ from classes import *
 from directions import *
 from items import Lighter
 from rooms import room_layout
+import time
 
+fatigue = 100
 player = Character()
 actions = ["Examiner", "Observer", "Ouvrir",
            "Boire", "Lacher", "Aller", "Bruler"]
 inventory = Inventory([])
 game_manager = GameManager(room_layout)
 
+def sommeil():
+    print ('\nVous êtes extremement fatigué, vous avez besoin de dormir')
+    print ('\nVous vous allongez sur le sol, et tombez dans un profond sommeil\nZZZZZzzzzzzz')
+    time.sleep(10)
+    print ('\nVous vous reveillez en pleine forme, prêt à affronter tous les dangers !!')
+    input ('Appuyer sur entrée lorsque vous serez prêt à repartir à l\'aventure\n')
 
 def get_obj(obj_dict, verb="examiner", obj=""):
     # obj_list_str = " | ".join([item.name for item in obj_dict.values()])
     obj = obj.replace(" ", "") or input(
         "Que voulez vous %s ?\n> " % verb).upper().replace(" ", "")
     if not obj in obj_dict:
-        return print("Il n'y a rien de tel ici.")
+        return print ("Il n'y a rien de tel ici.")
     return obj_dict[obj]
 
 def go(direction=""):
@@ -86,10 +95,14 @@ print(("Vous revenez a vous peu a peu. Tout est flou dans votre esprit. " +
        "Vous le mettez sur le dos, et attendez que vos yeux s'habituent a la luminosite."))
 
 while True:
+    if fatigue <= 20:
+        sommeil()
+        fatigue = 100
     game_manager.print_full_desc()
     user_choice = input("\n\nQue voulez vous faire ?\n( %s )\n> " %
                         " | ".join(actions)).upper()
     action, obj = parse_action(user_choice)
+    fatigue -=10
     if action == "QUITTER":
         print("Vous avez abandonné le jeu. SHAME. SHAAAAAAAAAAME")
         break
