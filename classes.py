@@ -1,6 +1,7 @@
 """ Contains abstract classes """
 
 from abc import ABC
+import time
 from colored import fg, attr
 from directions import directions
 
@@ -169,6 +170,7 @@ class Character():
 
     hit_point = 10
     instance = None
+    tiredness = 100
 
     def __init__(self):
         Character.instance = self
@@ -179,7 +181,7 @@ class Character():
     def heal(self, hit_point):
         print("Vous regagnez %d HP !" % hit_point)
         self.hit_point += hit_point
-    
+
     def end(self, weapon):
         if weapon:
             print(f'Vous utilisez {weapon.full_name} pour fuir votre condition de testeur.')
@@ -189,3 +191,16 @@ class Character():
 
     def handle_death(self):
         return True if self.hit_point > 0 else False
+
+    def loose_tiredness(self):
+        self.tiredness -= 5
+        return self.tiredness
+
+    def sleep(self):
+        print("""Vous êtes extremement fatigué, vous avez besoin de dormir
+             Vous vous allongez sur le sol, et tombez dans un profond sommeil.
+             \nZZZZZzzzzzzz""")
+        time.sleep(3)
+        print("""Vous vous reveillez en pleine forme, prêt à affronter tous
+             les dangers !!""")
+        self.tiredness = 100

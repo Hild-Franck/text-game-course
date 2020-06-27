@@ -7,7 +7,6 @@ from classes import *
 from directions import *
 from items import Lighter
 from rooms import room_layout
-import time
 
 tiredness = 100
 player = Character()
@@ -15,15 +14,6 @@ actions = ["Examiner", "Observer", "Ouvrir",
            "Boire", "Lacher", "Aller", "Bruler", "Fuir"]
 inventory = Inventory([])
 game_manager = GameManager(room_layout)
-
-
-def sleep():
-    print("""Vous êtes extremement fatigué, vous avez besoin de dormir
-             Vous vous allongez sur le sol, et tombez dans un profond sommeil.
-             \nZZZZZzzzzzzz""")
-    time.sleep(3)
-    print("""Vous vous reveillez en pleine forme, prêt à affronter tous
-             les dangers !!""")
 
 
 def get_obj(obj_dict, verb="examiner", obj=""):
@@ -103,9 +93,9 @@ print("""Vous revenez a vous peu a peu. Tout est flou dans votre esprit. A
       % inventory.full_name)
 
 while player.handle_death():
-    if tiredness <= 20:
-        sleep()
-        tiredness = 100
+    if player.loose_tiredness() <= 15:
+        player.sleep()
+
     game_manager.print_full_desc()
     user_choice = input("\n\nQue voulez vous faire ?\n( %s )\n> " %
                         " | ".join(actions)).upper()
