@@ -8,7 +8,6 @@ from directions import *
 from items import Lighter
 from rooms import room_layout
 
-tiredness = 100
 player = Character()
 actions = ["Examiner", "Observer", "Ouvrir",
            "Boire", "Lacher", "Aller", "Bruler", "Fuir"]
@@ -100,7 +99,6 @@ while player.handle_death():
     user_choice = input("\n\nQue voulez vous faire ?\n( %s )\n> " %
                         " | ".join(actions)).upper()
     action, obj = parse_action(user_choice)
-    tiredness -=10
     if action == "QUITTER":
         print("Vous avez abandonné le jeu. SHAME. SHAAAAAAAAAAME")
         break
