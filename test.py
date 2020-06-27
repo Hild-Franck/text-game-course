@@ -9,33 +9,37 @@ from items import Lighter
 from rooms import room_layout
 import time
 
-fatigue = 100
+tiredness = 100
 player = Character()
 actions = ["Examiner", "Observer", "Ouvrir",
            "Boire", "Lacher", "Aller", "Bruler", "Fuir"]
 inventory = Inventory([])
 game_manager = GameManager(room_layout)
 
-def sommeil():
-    print ('\nVous êtes extremement fatigué, vous avez besoin de dormir')
-    print ('\nVous vous allongez sur le sol, et tombez dans un profond sommeil\nZZZZZzzzzzzz')
-    time.sleep(10)
-    print ('\nVous vous reveillez en pleine forme, prêt à affronter tous les dangers !!')
-    input ('Appuyer sur entrée lorsque vous serez prêt à repartir à l\'aventure\n')
+
+def sleep():
+    print("""Vous êtes extremement fatigué, vous avez besoin de dormir
+             Vous vous allongez sur le sol, et tombez dans un profond sommeil.
+             \nZZZZZzzzzzzz""")
+    time.sleep(3)
+    print("""Vous vous reveillez en pleine forme, prêt à affronter tous
+             les dangers !!""")
+
 
 def get_obj(obj_dict, verb="examiner", obj=""):
     # obj_list_str = " | ".join([item.name for item in obj_dict.values()])
     obj = obj.replace(" ", "") or input(
         "Que voulez vous %s ?\n> " % verb).upper().replace(" ", "")
-    if not obj in obj_dict:
-        return print ("Il n'y a rien de tel ici.")
+    if obj not in obj_dict:
+        return print("Il n'y a rien de tel ici.")
     return obj_dict[obj]
+
 
 def go(direction=""):
     direction = direction.replace(" ", "") or input(
         "Ou voulez vous aller ?\n> ").upper().replace(" ", "")
 
-    if not direction in [d.name.upper() for d in directions.values()]:
+    if direction not in [d.name.upper() for d in directions.values()]:
         return print("Cette direction n'existe pas")
 
     if direction not in [directions[d].name.upper() for d, c in game_manager.current_room.doors.items() if c]:
@@ -93,19 +97,20 @@ def handle_action(action, obj_choice):
 
 game_manager.current_room = room_layout[0][0]
 
-print(("Vous revenez a vous peu a peu. Tout est flou dans votre esprit. " +
-       "A votre droite, vous remarquez %s sur le sol" % inventory.full_name + ". " +
-       "Vous le mettez sur le dos, et attendez que vos yeux s'habituent a la luminosite."))
+print("""Vous revenez a vous peu a peu. Tout est flou dans votre esprit. A
+         votre droite, vous remarquez %s sur le sol.\nVous le mettez sur le
+         dos, et attendez que vos yeux s'habituent a la luminosite."""
+      % inventory.full_name)
 
 while player.handle_death():
-    if fatigue <= 20:
-        sommeil()
-        fatigue = 100
+    if tiredness <= 20:
+        sleep()
+        tiredness = 100
     game_manager.print_full_desc()
     user_choice = input("\n\nQue voulez vous faire ?\n( %s )\n> " %
                         " | ".join(actions)).upper()
     action, obj = parse_action(user_choice)
-    fatigue -=10
+    tiredness -=10
     if action == "QUITTER":
         print("Vous avez abandonné le jeu. SHAME. SHAAAAAAAAAAME")
         break
